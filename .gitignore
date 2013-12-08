@@ -4,6 +4,8 @@
 *.aux
 *.bbl
 *.blg
+*.bib.bak
+*.pdf
 *.dvi
 *.fdb_latexmk
 *.glg
