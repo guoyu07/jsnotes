@@ -1,0 +1,352 @@
+\part{JavaScript Functions}
+
+函数是一组可以随时随地运行的语句，而且函数是 ECMAScript 的核心。
+
+函数是由这样的方式进行声明的：关键字 function、函数名、一组参数，以及置于括号中的待执行代码。
+
+函数的基本语法是这样的：
+
+\begin{lstlisting}[language=JavaScript]
+function functionName(arg0, arg1, ... argN) {
+  statements
+}
+\end{lstlisting}
+
+
+例如：
+
+
+\begin{lstlisting}[language=JavaScript]
+function sayHi(sName, sMessage) {
+  alert("Hello " + sName + sMessage);
+}
+\end{lstlisting}
+
+
+
+
+
+函数可以通过其名字加上括号中的参数进行调用，如果有多个参数。
+
+如果需要调用上例中的那个函数，可以使用如下的代码：
+
+\begin{lstlisting}[language=JavaScript]
+sayHi("David", " Nice to meet you!")
+\end{lstlisting}
+
+
+调用上面的函数 sayHi() 会生成一个警告窗口。
+
+函数 sayHi() 未返回值，不过不必专门声明它（像在 Java 中使用 void 那样），而且即使函数确实有值，也不必明确地声明它。该函数只需要使用 return 运算符后跟要返回的值即可\footnote{如果函数无明确的返回值，或调用了没有参数的 return 语句，那么它真正返回的值是 undefined。}。
+
+
+\begin{lstlisting}[language=JavaScript]
+function sum(iNum1, iNum2) {
+  return iNum1 + iNum2;
+}
+\end{lstlisting}
+
+下面的代码把 sum 函数返回的值赋予一个变量：
+
+
+\begin{lstlisting}[language=JavaScript]
+var iResult = sum(1,1);
+alert(iResult);	//输出 "2"
+\end{lstlisting}
+
+另一个重要概念是，与在 Java 中一样，函数在执行过 return 语句后立即停止代码。因此，return 语句后的代码都不会被执行。
+
+例如，在下面的代码中，alert 窗口就不会显示出来：
+
+
+\begin{lstlisting}[language=JavaScript]
+function sum(iNum1, iNum2) {
+  return iNum1 + iNum2;
+  alert(iNum1 + iNum2);
+}
+\end{lstlisting}
+
+一个函数中可以有多个 return 语句，如下所示：
+
+
+
+
+\begin{lstlisting}[language=JavaScript]
+function diff(iNum1, iNum2) {
+  if (iNum1 > iNum2) {
+    return iNum1 - iNum2;
+  } else {
+    return iNum2 - iNum1;
+  }
+}
+\end{lstlisting}
+
+
+上面的函数用于返回两个数的差。要实现这一点，必须用较大的数减去较小的数，因此用 if 语句决定执行哪个 return 语句。
+
+如果函数无返回值，那么可以调用没有参数的 return 运算符，随时退出函数。
+
+例如：
+
+\begin{lstlisting}[language=JavaScript]
+function sayHi(sMessage) {
+  if (sMessage == "bye") {
+    return;
+  }
+  alert(sMessage);
+}
+\end{lstlisting}
+
+
+这段代码中，如果 sMessage 等于 "bye"，就永远不显示警告框。
+
+
+\chapter{arguments Object}
+
+
+在函数代码中，使用特殊对象 arguments，开发者无需明确指出参数名，就能访问它们。
+
+例如，在函数 sayHi() 中，第一个参数是 message。用 arguments[0] 也可以访问这个值，即第一个参数的值（第一个参数位于位置 0，第二个参数位于位置 1，依此类推）。因此，无需明确命名参数，就可以重写函数：
+
+
+\begin{lstlisting}[language=JavaScript]
+function sayHi() {
+  if (arguments[0] == "bye") {
+    return;
+  }
+
+  alert(arguments[0]);
+}
+\end{lstlisting}
+
+还可以用 arguments 对象检测函数的参数个数，引用属性 arguments.length 即可。
+
+下面的代码将输出每次调用函数使用的参数个数：
+
+\begin{lstlisting}[language=JavaScript]
+function howManyArgs() {
+  alert(arguments.length);
+}
+
+howManyArgs("string", 45);
+howManyArgs();
+howManyArgs(12);
+\end{lstlisting}
+
+
+上面这段代码将依次显示 "2"、"0" 和 "1"。
+
+与其他程序设计语言不同，ECMAScript 不会验证传递给函数的参数个数是否等于函数定义的参数个数。开发者定义的函数都可以接受任意个数的参数（根据 Netscape 的文档，最多可接受 25 个），而不会引发任何错误。任何遗漏的参数都会以 undefined 传递给函数，多余的函数将忽略。
+
+
+用 arguments 对象判断传递给函数的参数个数，即可模拟函数重载：
+
+
+\begin{lstlisting}[language=JavaScript]
+function doAdd() {
+  if(arguments.length == 1) {
+    alert(arguments[0] + 5);
+  } else if(arguments.length == 2) {
+    alert(arguments[0] + arguments[1]);
+  }
+}
+
+doAdd(10);	//输出 "15"
+doAdd(40, 20);	//输出 "60"
+\end{lstlisting}
+
+
+当只有一个参数时，doAdd() 函数给参数加 5。如果有两个参数，则会把两个参数相加，返回它们的和。所以，doAdd(10) 输出的是 "15"，而 doAdd(40, 20) 输出的是 "60"。
+
+虽然不如重载那么好，不过已足以避开 ECMAScript 的这种限制。
+
+\chapter{Function Object}
+
+
+
+ECMAScript 的函数实际上就是功能完整的对象，Function 类可以表示开发者定义的任何函数。
+
+用 Function 类直接创建函数的语法如下：
+
+\begin{lstlisting}[language=JavaScript]
+var function_name = new function(arg1, arg2, ..., argN, function_body)
+\end{lstlisting}
+
+在上面的形式中，每个 arg 都是一个参数，最后一个参数是函数主体（要执行的代码）。这些参数必须是字符串，示例代码如下：
+
+\begin{lstlisting}[language=JavaScript]
+var sayHi 
+= 
+new Function("sName", "sMessage", "alert(\"Hello \" + sName + sMessage);");
+\end{lstlisting}
+
+虽然由于字符串的关系，这种形式写起来有些困难，但有助于理解函数只不过是一种引用类型，它们的行为与用 Function 类明确创建的函数行为是相同的，所以上述代码等同于如下的函数定义：
+
+
+\begin{lstlisting}[language=JavaScript]
+function sayHi(sName, sMessage) {
+  alert("Hello " + sName + sMessage);
+}
+\end{lstlisting}
+
+
+参考下面的函数重载的示例：
+
+
+
+\begin{lstlisting}[language=JavaScript]
+function doAdd(iNum) {
+  alert(iNum + 20);
+}
+
+function doAdd(iNum) {
+  alert(iNum + 10);
+}
+
+doAdd(10);	//输出 "20"
+\end{lstlisting}
+
+这里，第二个函数重载了第一个函数，使 doAdd(10) 输出了 "20"，而不是 "30"。如果以下面的形式重写该代码块，这个概念就清楚了：
+
+
+\begin{lstlisting}[language=JavaScript]
+var doAdd = new Function("iNum", "alert(iNum + 20)");
+var doAdd = new Function("iNum", "alert(iNum + 10)");
+doAdd(10);//输出“20”
+\end{lstlisting}
+
+很显然，doAdd 的值被改成了指向不同对象的指针，函数名只是指向函数对象的引用值，行为就像其他对象一样，甚至可以使两个变量指向同一个函数：
+
+
+
+\begin{lstlisting}[language=JavaScript]
+var doAdd = new Function("iNum", "alert(iNum + 10)");
+var alsodoAdd = doAdd;
+doAdd(10);	//输出 "20"
+alsodoAdd(10);	//输出 "20"
+\end{lstlisting}
+
+在这里，变量 doAdd 被定义为函数，然后 alsodoAdd 被声明为指向同一个函数的指针。用这两个变量都可以执行该函数的代码，并输出相同的结果~——"20"。因此，如果函数名只是指向函数的变量，那么就可以把函数作为参数传递给另一个函数。
+
+
+\begin{lstlisting}[language=JavaScript]
+function callAnotherFunc(fnFunction, vArgument) {
+  fnFunction(vArgument);
+}
+
+var doAdd = new Function("iNum", "alert(iNum + 10)");
+
+callAnotherFunc(doAdd, 10);	//输出 "20"
+\end{lstlisting}
+
+在上面的例子中，callAnotherFunc() 有两个参数~——要调用的函数和传递给该函数的参数。这段代码把 doAdd() 传递给 callAnotherFunc() 函数，参数是 10，输出 "20"。
+
+注意：尽管可以使用 Function 构造函数创建函数，但最好不要使用它，因为用它定义函数比用传统方式要慢得多。不过，所有函数都应看作 Function 类的实例。
+
+
+\section{Function Object property}
+
+函数属于引用类型，所以它们也有属性和方法。ECMAScript 定义的属性 length 声明了函数期望的参数个数。例如：
+
+
+\begin{lstlisting}[language=JavaScript]
+function doAdd(iNum) {
+  alert(iNum + 10);
+}
+
+function sayHi() {
+  alert("Hi");
+}
+
+alert(doAdd.length);	//输出 "1"
+alert(sayHi.length);	//输出 "0"
+\end{lstlisting}
+
+函数 doAdd() 定义了一个参数，因此它的 length 是 1；sayHi() 没有定义参数，所以 length 是 0。
+
+无论定义了几个参数，ECMAScript 可以接受任意多个参数（最多 25 个），属性 length 只是为查看默认情况下预期的参数个数提供了一种简便方式。
+
+
+
+
+\section{Function Object method}
+
+Function 对象也有与所有对象共享的 valueOf() 方法和 toString() 方法。这两个方法返回的都是函数的源代码，在调试时尤其有用。例如：
+
+\begin{lstlisting}[language=JavaScript]
+function doAdd(iNum) {
+  alert(iNum + 10);
+}
+
+document.write(doAdd.toString());
+\end{lstlisting}
+
+上面这段代码输出了 doAdd() 函数的文本。
+
+\chapter{closure}
+
+
+闭包，指的是词法表示包括不被计算的变量的函数，也就是说，函数可以使用函数之外定义的变量。
+
+
+ECMAScript 最易让人误解的一点是，它支持闭包（closure）。
+
+在 ECMAScript 中使用全局变量是一个简单的闭包实例，思考下面这段代码：
+
+\begin{lstlisting}[language=JavaScript]
+var sMessage = "hello world";
+
+function sayHelloWorld() {
+  alert(sMessage);
+}
+
+sayHelloWorld();
+\end{lstlisting}
+
+
+在上面这段代码中，脚本被载入内存后，并没有为函数 sayHelloWorld() 计算变量 sMessage 的值。该函数捕获 sMessage 的值只是为了以后的使用，也就是说，解释程序知道在调用该函数时要检查 sMessage 的值。sMessage 将在函数调用 sayHelloWorld() 时（最后一行）被赋值，显示消息 "hello world"。
+
+在一个函数中定义函数另一个会使闭包变得更加复杂。例如：
+
+
+
+\begin{lstlisting}[language=JavaScript]
+var iBaseNum = 10;
+
+function addNum(iNum1, iNum2) {
+  function doAdd() {
+    return iNum1 + iNum2 + iBaseNum;
+  }
+  return doAdd();
+}
+\end{lstlisting}
+
+
+这里，函数 addNum() 包括函数 doAdd() （闭包）。内部函数是一个闭包，因为它将获取外部函数的参数 iNum1 和 iNum2 以及全局变量 iBaseNum 的值。 addNum() 的最后一步调用了 doAdd()，把两个参数和全局变量相加，并返回它们的和。
+
+这里要掌握的重要概念是，doAdd() 函数根本不接受参数，它使用的值是从执行环境中获取的。
+
+可以看到，闭包是 ECMAScript 中非常强大多用的一部分，可用于执行复杂的计算。就像使用任何高级函数一样，使用闭包要小心，因为它们可能会变得非常复杂。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
