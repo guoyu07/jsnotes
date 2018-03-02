@@ -219,7 +219,6 @@ acs-*.bib
 *.lol
 
 # makeidx
-=======
 *.acn
 *.acr
 *.alg
@@ -233,12 +232,10 @@ acs-*.bib
 *.glg
 *.glo
 *.gls
->>>>>>> e8a2060a26ab71f78633774406c3d677df56eda0
 *.idx
 *.ilg
 *.ind
 *.ist
-<<<<<<< HEAD
 
 # minitoc
 *.maf
@@ -563,7 +560,6 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 
-=======
 *.lof
 *.log
 *.lot
@@ -581,4 +577,3 @@ xcuserdata
 *.vrb
 *.xdy
 *.tdo
->>>>>>> e8a2060a26ab71f78633774406c3d677df56eda0
