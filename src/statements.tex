@@ -1,0 +1,561 @@
+\part{Statements}
+
+
+ECMA - 262 描述了 ECMAScript 的几种语句（statement），语句主要定义了 ECMAScript 的大部分语句，通常采用一个或多个关键字，完成给定的任务。
+
+语句可以非常简单，例如通知函数退出，也可以非常复杂，如声明一组要反复执行的命令。
+
+
+\chapter{If statements}
+
+if 语句是 ECMAScript 中最常用的语句之一，事实上在许多计算机语言中都是如此。
+
+if 语句的语法如下：
+
+\begin{lstlisting}[language=JavaScript]
+if (condition) statement1 else statement2
+\end{lstlisting}
+
+其中 condition 可以是任何表达式，计算的结果甚至不必是真正的 boolean 值，ECMAScript 会把它转换成 boolean 值。
+
+如果条件计算结果为 true，则执行 statement1；如果条件计算结果为 false，则执行 statement2。
+
+每个语句都可以是单行代码，也可以是代码块。
+
+\begin{lstlisting}[language=JavaScript]
+if (i > 30)
+  {alert("大于 30");}
+else
+  {alert("小于等于 30");}
+\end{lstlisting}
+
+使用代码块被认为是一种最佳的编程实践，即使要执行的代码只有一行。这样做可以使每个条件要执行什么一目了然。
+
+还可以串联多个 if 语句。就像这样：
+
+
+\begin{lstlisting}[language=JavaScript]
+if (condition1) statement1 else if (condition2) statement2 else statement3
+\end{lstlisting}
+
+例如：
+
+
+\begin{lstlisting}[language=JavaScript]
+if (i > 30) {
+  alert("大于 30");
+} else if (i < 0) {
+  alert("小于 0");
+} else {
+  alert("在 0 到 30 之间");
+}
+\end{lstlisting}
+
+
+\chapter{Iteration statements}
+
+
+迭代语句又叫循环语句，声明一组要反复执行的命令，直到满足某些条件为止。循环通常用于迭代数组的值（因此而得名），或者执行重复的算术任务。
+
+\section{do-while statements}
+
+do-while 语句是后测试循环，即退出条件在执行循环内部的代码之后计算。这意味着在计算表达式之前，至少会执行循环主体一次。
+
+
+它的语法如下：
+
+
+\begin{lstlisting}[language=JavaScript]
+do {statement} while (expression);
+\end{lstlisting}
+
+例子：
+
+\begin{lstlisting}[language=JavaScript]
+var i = 0;
+do {i += 2;} while (i < 10);
+\end{lstlisting}
+
+
+
+
+\section{while statements}
+
+
+while 语句是前测试循环。这意味着退出条件是在执行循环内部的代码之前计算的。因此，循环主体可能根本不被执行。
+
+
+它的语法如下：
+
+\begin{lstlisting}[language=JavaScript]
+while (expression) statement
+\end{lstlisting}
+
+
+例子：
+
+\begin{lstlisting}[language=JavaScript]
+var i = 0;
+while (i < 10) {
+  i += 2;
+}
+\end{lstlisting}
+
+
+\section{for statements}
+
+
+for 语句是前测试循环，而且在进入循环之前，能够初始化变量，并定义循环后要执行的代码。
+
+
+它的语法如下：
+
+\begin{lstlisting}[language=JavaScript]
+for (initialization; expression; post-loop-expression) statement
+\end{lstlisting}
+
+注意：post-loop-expression 之后不能写分号，否则无法运行。
+
+例子：
+
+\begin{lstlisting}[language=JavaScript]
+iCount = 6;
+for (var i = 0; i < iCount; i++) {
+  alert(i);
+}
+\end{lstlisting}
+
+这段代码定义了初始值为 0 的变量 i。只有当条件表达式（i < iCount）的值为 true 时，才进入 for 循环，这样循环主体可能不被执行。如果执行了循环主体，那么将执行循环后表达式，并迭代变量 i。
+
+\section{for-in statements}
+
+
+for 语句是严格的迭代语句，用于枚举对象的属性。
+
+它的语法如下：
+
+
+\begin{lstlisting}[language=JavaScript]
+for (property in expression) statement
+\end{lstlisting}
+
+例子：
+
+
+\begin{lstlisting}[language=JavaScript]
+for (sProp in window) {
+  alert(sProp);
+}
+\end{lstlisting}
+
+这里，for-in 语句用于显示 window 对象的所有属性。
+
+PropertyIsEnumerable() 是 ECMAScript 中专门用于说明属性是否可以用 for-in 语句访问的方法。
+
+\chapter{Label statements}
+
+可以用下列语句给语句加标签，以便以后调用：
+
+
+\begin{lstlisting}[language=JavaScript]
+label : statement
+\end{lstlisting}
+
+例如：
+
+\begin{lstlisting}[language=JavaScript]
+start : i = 5;
+\end{lstlisting}
+
+在这个例子中，标签 start 可以被之后的 break 或 continue 语句引用。
+
+
+
+
+\chapter{Break \& Continue statements}
+
+
+break 和 continue 语句对循环中的代码执行提供了更严格的控制。
+
+break 和 continue 语句的不同之处在于，break 语句可以立即退出循环，阻止再次反复执行任何代码，而 continue 语句只是退出当前循环，根据控制表达式还允许继续进行下一次循环。
+
+
+例如：
+
+\begin{lstlisting}[language=JavaScript]
+var iNum = 0;
+
+for (var i=1; i<10; i++) {
+  if (i % 5 == 0) {
+    break;
+  }
+  iNum++;
+}
+alert(iNum);	//输出 "4"
+\end{lstlisting}
+
+在以上代码中，for 循环从 1 到 10 迭代变量 i。在循环主体中，if 语句将（使用取模运算符）检查 i 的值是否能被 5 整除。如果能被 5 整除，将执行 break 语句。alert 显示 "4"，即退出循环前执行循环的次数。
+
+如果用 continue 语句代替这个例子中的 break 语句，结果将不同：
+
+
+
+\begin{lstlisting}[language=JavaScript]
+var iNum = 0;
+
+for (var i=1; i<10; i++) {
+  if (i % 5 == 0) {
+    continue;
+  }
+  iNum++;
+}
+alert(iNum);	//输出 "8"
+\end{lstlisting}
+
+
+这里，alert 将显示 "8"，即执行循环的次数。可能执行的循环总数为 9，不过当 i 的值为 5 时，将执行 continue 语句，会使循环跳过表达式 iNum++，返回循环开头。
+
+break 语句和 continue 语句都可以与有标签的语句联合使用，返回代码中的特定位置。
+
+通常，当循环内部还有循环时，会这样做，例如：
+
+\begin{lstlisting}[language=JavaScript]
+var iNum = 0;
+
+outermost:
+for (var i=0; i<10; i++) {
+  for (var j=0; j<10; j++) {
+    if (i == 5 && j == 5) {
+    break outermost;
+  }
+  iNum++;
+  }
+}
+
+alert(iNum);	//输出 "55"
+\end{lstlisting}
+
+
+在上面的例子中，标签 outermost 表示的是第一个 for 语句。正常情况下，每个 for 语句执行 10 次代码块，这意味着 iNum++ 正常情况下将被执行 100 次，在执行完成时，iNum 应该等于 100。这里的 break 语句有一个参数，即停止循环后要跳转到的语句的标签。这样 break 语句不止能跳出内部 for 语句（即使用变量 j 的语句），还能跳出外部 for 语句（即使用变量 i 的语句）。因此，iNum 最后的值是 55，因为当 i 和 j 的值都等于 5 时，循环将终止。
+
+可以以相同的方式使用 continue 语句：
+
+\begin{lstlisting}[language=JavaScript]
+var iNum = 0;
+
+outermost:
+for (var i=0; i<10; i++) {
+  for (var j=0; j<10; j++) {
+    if (i == 5 && j == 5) {
+    continue outermost;
+  }
+  iNum++;
+  }
+}
+
+alert(iNum);	//输出 "95"
+\end{lstlisting}
+
+在上例中，continue 语句会迫使循环继续，不止是内部循环，外部循环也如此。当 j 等于 5 时出现这种情况，意味着内部循环将减少 5 次迭代，致使 iNum 的值为 95。
+
+可以看出，与 break 和 continue 联合使用的有标签语句非常强大，不过过度使用它们会给调试代码带来麻烦。要确保使用的标签具有说明性，同时不要嵌套太多层循环。
+
+
+
+
+
+
+
+
+\chapter{With statements}
+
+
+with 语句用于设置代码在特定对象中的作用域。
+
+它的语法：
+
+\begin{lstlisting}[language=JavaScript]
+with (expression) statement
+\end{lstlisting}
+
+例如：
+
+\begin{lstlisting}[language=JavaScript]
+var sMessage = "hello";
+with(sMessage) {
+  alert(toUpperCase());	//输出 "HELLO"
+}
+\end{lstlisting}
+
+
+在这个例子中，with 语句用于字符串，所以在调用 toUpperCase() 方法时，解释程序将检查该方法是否是本地函数。如果不是，它将检查伪对象 sMessage，看它是否为该对象的方法。然后，alert 输出 "HELLO"，因为解释程序找到了字符串 "hello" 的 toUpperCase() 方法。
+
+with 语句是运行缓慢的代码块，尤其是在已设置了属性值时。大多数情况下，如果可能，最好避免使用它。
+
+
+
+
+\chapter{Switch statements}
+
+switch 语句是 if 语句的兄弟语句，开发者可以用 switch 语句为表达式提供一系列的情况（case）。
+
+
+switch 语句的语法如下：
+
+
+\begin{lstlisting}[language=JavaScript]
+switch (expression)
+  case value: statement;
+    break;
+  case value: statement;
+    break;
+  case value: statement;
+    break;
+  case value: statement;
+    break;
+...
+  case value: statement;
+    break;
+  default: statement;
+\end{lstlisting}
+
+
+每个情况（case）都是表示“如果 expression 等于 value，就执行 statement”。
+
+关键字 break 会使代码跳出 switch 语句。如果没有关键字 break，代码执行就会继续进入下一个 case。
+
+关键字 default 说明了表达式的结果不等于任何一种情况时的操作（事实上，它相对于 else 从句）。
+
+switch 语句主要是为避免让开发者编写下面的代码：
+
+
+\begin{lstlisting}[language=JavaScript]
+if (i == 20)
+  alert("20");
+else if (i == 30)
+  alert("30");
+else if (i == 40)
+  alert("40");
+else
+  alert("other");
+\end{lstlisting}
+
+
+等价的 switch 语句是这样的：
+
+
+\begin{lstlisting}[language=JavaScript]
+switch (i) {
+  case 20: alert("20");
+    break;
+  case 30: alert("30");
+    break;
+  case 40: alert("40");
+    break;
+  default: alert("other");
+}
+\end{lstlisting}
+
+ECMAScript 和 Java 中的 switch 语句有两点不同。在 ECMAScript 中，switch 语句可以用于字符串，而且能用不是常量的值说明情况：
+
+\begin{lstlisting}[language=JavaScript]
+var BLUE = "blue", RED = "red", GREEN  = "green";
+
+switch (sColor) {
+  case BLUE: alert("Blue");
+    break;
+  case RED: alert("Red");
+    break;
+  case GREEN: alert("Green");
+    break;
+  default: alert("Other");
+}
+\end{lstlisting}
+
+这里，switch 语句用于字符串 sColor，声明 case 使用的是变量 BLUE、RED 和 GREEN，这在 ECMAScript 中是完全有效的。
+
+
+
+
+
+
+
+\chapter{Recursion statements}
+
+递归（英语：Recursion），又译为递回，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。递归一词还较常用于描述以自相似方法重复事物的过程。例如，当两面镜子相互之间近似平行时，镜中嵌套的图像是以无限递归的形式出现的。也可以理解为自我复制的过程。
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{Droste.jpg}
+\caption{德罗斯特效应}
+\label{Droste}
+\end{figure}
+
+德罗斯特效应是递归的一种视觉形式。图中女性手持的物体中有一幅她本人手持同一物体的小图片，进而小图片中还有更小的一幅她手持同一物体的图片，依此类推。
+
+
+具体来说，递归（英语：recursion）在计算机科学中是指一种通过重复将问题分解为同类的子问题而解决问题的方法。递归式方法可以被用于解决很多的计算机科学问题，因此它是计算机科学中十分重要的一个概念。绝大多数编程语言支持函数的自调用，在这些语言中函数可以通过调用自身来进行递归。计算理论可以证明递归的作用可以完全取代循环，因此在很多函数编程语言（如Scheme）中习惯用递归来实现循环。
+
+计算机科学家尼克劳斯·维尔特如此描述递归：
+
+\textsf{递归的强大之处在于它允许用户用有限的语句描述无限的对象。因此，在计算机科学中，递归可以被用来描述无限步的运算，尽管描述运算的程序是有限的。}
+
+\begin{flushright}
+——尼克劳斯·维尔特
+\end{flushright}
+
+
+
+\section{Recursive functions and algorithms}
+
+
+在支持自调用的编程语言中，递归可以通过简单的函数调用来完成，如计算阶乘的程序在数学上可以定义为：
+
+\[\text{fact(n)}=\begin{cases}
+1	\qquad \qquad \qquad\  \text{if n=0}\\
+\text{n}\cdot \text{fact(n-1)} \qquad \text{if n>0}
+\end{cases}\]
+
+这一程序在Scheme语言中可以写作：
+
+\begin{lstlisting}[language=Scheme]
+(define (factorial n)
+  (if (= n 0)
+      1
+      (* n (factorial (- n 1)))))
+\end{lstlisting}
+
+
+
+\section{Fixed-point combinator}
+
+
+即使一个编程语言不支持自调用，如果在这语言中函数是第一类对象（即可以在运行期创建并作为变量处理），递归可以通过不动点组合子（英语：Fixed-point combinator）来产生。以下Scheme程序没有用到自调用，但是利用了一个叫做Z 算子（英语：Z combinator）的不动点组合子，因此同样能达到递归的目的。
+
+\begin{lstlisting}[language=Scheme]
+(define Z
+  (lambda (f)
+    ((lambda (recur) (f (lambda arg (apply (recur recur) arg))))
+     (lambda (recur) (f (lambda arg (apply (recur recur) arg)))))))
+ 
+(define fact
+  (Z (lambda (f)
+       (lambda (n)
+         (if (<= n 0)
+             1
+             (* n (f (- n 1))))))))
+\end{lstlisting}
+
+
+这一程序思路是，既然在这里函数不能调用其自身，我们可以用 Z 组合子应用(application)这个函数后得到的函数再应用需计算的参数。
+
+\section{Tail-recursive functions}
+
+
+尾部递归是指递归函数在调用自身后直接传回其值，而不对其再加运算。尾部递归与循环是等价的，而且在一些语言（如Scheme中）可以被优化为循环指令。 因此，在这些语言中尾部递归不会占用调用堆栈空间。以下Scheme程序同样计算一个数字的阶乘，但是使用尾部递归：
+
+
+\begin{lstlisting}[language=Scheme]
+(define (factorial n)
+  (define (iter product counter)
+    (if (> counter n)
+        product
+        (iter (* counter product)
+              (+ counter 1))))
+  (iter 1 1))
+\end{lstlisting}
+
+
+\section{Recursive data types}
+
+
+
+数据类型可以通过递归来进行定义，比如一个简单的递归定义为自然数的定义：“一个自然数或等于0，或等于另一个自然数加上1”。Haskell中可以定义链表为：
+
+
+
+\begin{lstlisting}[language=Scheme]
+data ListOfStrings = EmptyList | Cons String ListOfStrings
+\end{lstlisting}
+
+这一定义相当于声明“一个链表或是空串行，或是一个链表之前加上一个字符串”。可以看出所有链表都可以通过这一递归定义来达到。
+
+
+\section{JavaScript Resurion Example}
+
+
+需求：通过JavaScript实现让一个长60px，高30px的蓝色图块在5秒内移动200px。
+
+HTML代码如下：
+
+
+
+
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="animation.css">
+		<title>js animation example</title>
+	</head>
+	<body>
+		<div id="testdiv"></div>
+		
+		<script>
+			var pos=document.getElementById("testdiv");
+			var postyle = getComputedStyle(pos);
+			var divleft =parseInt(postyle.marginLeft,10);
+			
+			function mvdiv(){	
+				divleft+=2;
+				mg=divleft+"px";
+				//set testdiv new margin-left 
+				pos.style.marginLeft=mg;
+
+				//set animation length 200px
+				//if length >=200, return
+				if(divleft>=200)
+					return
+
+				//lanch 2px per 50 ms 
+				setTimeout(mvdiv,50);
+			}
+			
+			//lanch animation
+			mvdiv();			
+
+		</script>
+	</body>
+</html>
+\end{lstlisting}
+
+CSS代码如下：
+
+\begin{lstlisting}[language=CSS]
+#testdiv{
+   margin-left:0px;
+   height:30px;
+   width:60px;
+   background-color:#0000ff;
+   position:static;
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

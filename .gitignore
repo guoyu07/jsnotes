@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ---> CVS
 /CVS/*
 */CVS/*
@@ -218,10 +219,26 @@ acs-*.bib
 *.lol
 
 # makeidx
+=======
+*.acn
+*.acr
+*.alg
+*.aux
+*.bbl
+*.blg
+*.bib.bak
+*.pdf
+*.dvi
+*.fdb_latexmk
+*.glg
+*.glo
+*.gls
+>>>>>>> e8a2060a26ab71f78633774406c3d677df56eda0
 *.idx
 *.ilg
 *.ind
 *.ist
+<<<<<<< HEAD
 
 # minitoc
 *.maf
@@ -546,3 +563,22 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 
+=======
+*.lof
+*.log
+*.lot
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.nlo
+*.out
+*.pdfsync
+*.ps
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdy
+*.tdo
+>>>>>>> e8a2060a26ab71f78633774406c3d677df56eda0
